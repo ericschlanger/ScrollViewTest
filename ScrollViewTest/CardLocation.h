@@ -14,7 +14,8 @@
 @property (nonatomic) CGAffineTransform transform;
 @property (nonatomic) CGFloat alpha;
 
-+ (CardLocation *)locationForIndex:(int)index;
++ (instancetype)locationForIndex:(int)index;
++ (instancetype)locationForStart:(NSInteger)startIdx end:(NSInteger)endIdx distancePercentage:(CGFloat)distancePercent;
 
 
 

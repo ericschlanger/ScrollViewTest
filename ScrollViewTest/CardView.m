@@ -8,15 +8,6 @@
 
 #import "CardView.h"
 
-typedef enum ScrollDirection {
-    ScrollDirectionNone,
-    ScrollDirectionRight,
-    ScrollDirectionLeft,
-    ScrollDirectionUp,
-    ScrollDirectionDown,
-    ScrollDirectionCrazy,
-} ScrollDirection;
-
 @interface CardView () <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *table;
@@ -71,10 +62,10 @@ typedef enum ScrollDirection {
     NSLog(@"H: %f",self.table.contentSize.height);
     if(scrollDirection == ScrollDirectionDown && scrollView.contentOffset.y <= 0) {
         self.table.alwaysBounceVertical = NO;
-        [self.delegate cardView:self moveWithOffset:-1];
+        [self.delegate cardView:self moveWithOffset:-1 withDirection:ScrollDirectionDown];
     } else if(scrollDirection == ScrollDirectionUp && scrollView.contentOffset.y >= 400) { // FIGURE OUT THIS NUMBER
         self.table.alwaysBounceVertical = NO;
-        [self.delegate cardView:self moveWithOffset:1];
+        [self.delegate cardView:self moveWithOffset:1 withDirection:ScrollDirectionUp];
     } else {
         self.table.alwaysBounceVertical = YES;
     }

@@ -38,7 +38,16 @@ static const CGFloat transform6 = 29/32.0;
 
 @implementation CardLocation
 
-+ (CardLocation *)locationForIndex:(int)index {
++ (instancetype)locationWithCenter:(CGPoint)center alpha:(CGFloat)alpha transform:(CGAffineTransform)transform {
+    CardLocation *location = [[CardLocation alloc]init];
+    location.center = center;
+    location.alpha = alpha;
+    location.transform = transform;
+    return location;
+}
+
++ (instancetype)locationForIndex:(int)index {
+
     switch (index) {
         case 0:
             return [CardLocation locationWithCenter:CGPointMake(160, center1) alpha:alpha1 transform:CGAffineTransformMakeScale(transform1, transform1)];
@@ -56,11 +65,15 @@ static const CGFloat transform6 = 29/32.0;
     return nil;
 }
 
-+ (instancetype)locationWithCenter:(CGPoint)center alpha:(CGFloat)alpha transform:(CGAffineTransform)transform {
++ (instancetype)locationForStart:(NSInteger)startIdx end:(NSInteger)endIdx distancePercentage:(CGFloat)distancePercent {
+    
+    CardLocation *start = [CardLocation locationForIndex:startIdx];
+    CardLocation *end = [CardLocation locationForIndex:endIdx];
     CardLocation *location = [[CardLocation alloc]init];
-    location.center = center;
-    location.alpha = alpha;
-    location.transform = transform;
+    location.center = CGPointMake(160, start.center.y + (end.center.y - start.center.y)*distancePercent);
+    location.alpha = start.alpha + (end.alpha - start.alpha)*distancePercent;
+    CGFloat newTrans = start.transform.a + (end.transform.a - start.transform.a)*distancePercent;
+    location.transform = CGAffineTransformMakeScale(newTrans, newTrans);
     return location;
 }
 

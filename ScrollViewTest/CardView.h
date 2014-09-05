@@ -9,10 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "CardLocation.h"
 
+typedef enum ScrollDirection {
+    ScrollDirectionNone,
+    ScrollDirectionRight,
+    ScrollDirectionLeft,
+    ScrollDirectionUp,
+    ScrollDirectionDown,
+    ScrollDirectionCrazy,
+} ScrollDirection;
+
 @class CardView;
 @protocol CardViewDelegate
 
-- (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset;
+- (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset withDirection:(ScrollDirection)direction;
 
 @end
 

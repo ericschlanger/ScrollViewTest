@@ -48,18 +48,18 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self moveCardDeck:CardDeckAnimateDirectionNext];
-    });
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self moveCardDeck:CardDeckAnimateDirectionNext];
-    });
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self moveCardDeck:CardDeckAnimateDirectionPrev];
-    });
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self moveCardDeck:CardDeckAnimateDirectionPrev];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self moveCardDeck:CardDeckAnimateDirectionNext];
+//    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self moveCardDeck:CardDeckAnimateDirectionNext];
+//    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self moveCardDeck:CardDeckAnimateDirectionPrev];
+//    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self moveCardDeck:CardDeckAnimateDirectionPrev];
+//    });
 }
 
 - (void)setupCards {
@@ -89,7 +89,6 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
             if(self.currentCardIdx - 1 >= 0) {
                [self.cardArray[self.currentCardIdx - 1] setLocation:[CardLocation locationForIndex:0]];
             }
-           
             [self.cardArray[self.currentCardIdx] setLocation:[CardLocation locationForIndex:1]];
            
             if(self.currentCardIdx + 1 < self.cardArray.count) {
@@ -132,11 +131,32 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     [self.cardArray addObject:card];
 }
 
-- (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset {
+- (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset withDirection:(ScrollDirection)direction {
     CGRect oldFrame = cardView.frame;
     oldFrame.origin.y = oldFrame.origin.y - offset;
     cardView.frame = oldFrame;
     
+    CGFloat totalDist = 20.f;
+    NSLog(@"Offset: %f",offset);
+    CGFloat percentage = abs(offset/totalDist);
+    
+    
+//    if(direction == ScrollDirectionDown) {
+//        if(self.currentCardIdx - 2 >= 0) {
+//            [self.cardArray[self.currentCardIdx - 2] setLocation:[CardLocation locationForStart:0 end:1 distancePercentage:percentage]];
+//        }
+//        if(self.currentCardIdx - 1 >= 0) {
+//            [self.cardArray[self.currentCardIdx - 1] setLocation:[CardLocation locationForStart:1 end:2 distancePercentage:percentage]];
+//        }
+//        [self.cardArray[self.currentCardIdx] setLocation:[CardLocation locationForStart:2 end:3 distancePercentage:percentage]];
+//
+//        if(self.currentCardIdx + 1 < self.cardArray.count) {
+//            [self.cardArray[self.currentCardIdx + 1] setLocation:[CardLocation locationForStart:3 end:4 distancePercentage:percentage]];
+//        }
+//        if(self.currentCardIdx + 2 < self.cardArray.count) {
+//            [self.cardArray[self.currentCardIdx + 2] setLocation:[CardLocation locationForStart:4 end:5 distancePercentage:percentage]];
+//        }
+//    }
 }
 
 
