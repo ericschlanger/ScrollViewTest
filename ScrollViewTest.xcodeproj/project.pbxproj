@@ -23,7 +23,6 @@
 		2752B4B019B68D5600E5C692 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2752B48F19B68D5600E5C692 /* UIKit.framework */; };
 		2752B4B819B68D5600E5C692 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2752B4B619B68D5600E5C692 /* InfoPlist.strings */; };
 		2752B4BA19B68D5600E5C692 /* ScrollViewTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2752B4B919B68D5600E5C692 /* ScrollViewTestTests.m */; };
-		2752B4C519B68F1D00E5C692 /* FancyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2752B4C419B68F1D00E5C692 /* FancyScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,8 +59,6 @@
 		2752B4B519B68D5600E5C692 /* ScrollViewTestTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ScrollViewTestTests-Info.plist"; sourceTree = "<group>"; };
 		2752B4B719B68D5600E5C692 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2752B4B919B68D5600E5C692 /* ScrollViewTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollViewTestTests.m; sourceTree = "<group>"; };
-		2752B4C319B68F1D00E5C692 /* FancyScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FancyScrollView.h; sourceTree = "<group>"; };
-		2752B4C419B68F1D00E5C692 /* FancyScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FancyScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,14 +123,12 @@
 				2752B49D19B68D5600E5C692 /* Main_iPhone.storyboard */,
 				2752B4A319B68D5600E5C692 /* CardView.h */,
 				2752B4A419B68D5600E5C692 /* CardView.m */,
-				2752B4A619B68D5600E5C692 /* Images.xcassets */,
-				2752B49219B68D5600E5C692 /* Supporting Files */,
-				2752B4C319B68F1D00E5C692 /* FancyScrollView.h */,
-				2752B4C419B68F1D00E5C692 /* FancyScrollView.m */,
 				27006E0F19B7DB5800C54988 /* MainViewController.h */,
 				27006E1019B7DB5800C54988 /* MainViewController.m */,
 				27006E1219B7EE5900C54988 /* CardLocation.h */,
 				27006E1319B7EE5900C54988 /* CardLocation.m */,
+				2752B4A619B68D5600E5C692 /* Images.xcassets */,
+				2752B49219B68D5600E5C692 /* Supporting Files */,
 			);
 			path = ScrollViewTest;
 			sourceTree = "<group>";
@@ -269,7 +264,6 @@
 				27006E1419B7EE5900C54988 /* CardLocation.m in Sources */,
 				2752B49819B68D5600E5C692 /* main.m in Sources */,
 				27006E1119B7DB5800C54988 /* MainViewController.m in Sources */,
-				2752B4C519B68F1D00E5C692 /* FancyScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

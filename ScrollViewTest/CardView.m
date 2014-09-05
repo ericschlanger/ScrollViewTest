@@ -7,7 +7,6 @@
 //
 
 #import "CardView.h"
-#import "FancyScrollView.h"
 
 typedef enum ScrollDirection {
     ScrollDirectionNone,
@@ -21,7 +20,6 @@ typedef enum ScrollDirection {
 @interface CardView () <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *table;
-@property (nonatomic, strong) FancyScrollView *scrollView;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @end
 

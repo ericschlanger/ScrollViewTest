@@ -12,16 +12,16 @@
 
 #import "CardLocation.h"
 
-static const CGFloat kCardDistanceFromBottom = 44;
-#define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
-// Location 3
-static const CGFloat kCardYLoc = 85.5;
+typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
+    CardDeckAnimateDirectionPrev,
+    CardDeckAnimateDirectionNext
+};
 
 @interface MainViewController () <CardViewDelegate>
 
 @property (nonatomic, strong) UIView *cardContainer;
 @property (nonatomic, strong) NSMutableArray *cardArray;
-@property (nonatomic, strong) NSNumber *currentCardIdx;
+@property (nonatomic) NSInteger currentCardIdx;
 
 @end
 
@@ -44,53 +44,88 @@ static const CGFloat kCardYLoc = 85.5;
     [self.view addSubview:self.cardContainer];
     
     [self setupCards];
+    self.currentCardIdx = 2;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self moveCardDeck:CardDeckAnimateDirectionNext];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self moveCardDeck:CardDeckAnimateDirectionNext];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self moveCardDeck:CardDeckAnimateDirectionPrev];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self moveCardDeck:CardDeckAnimateDirectionPrev];
+    });
 }
 
 - (void)setupCards {
     self.cardArray = [[NSMutableArray alloc]init];
     
-//    for(int i=3;i>0;i--) {
-//        CardView *cardView = [[CardView alloc]initWithFrame:CGRectMake(0,
-//                                                                       kCardYLoc - i*13,
-//                                                                       self.cardContainer.frame.size.width,
-//                                                                       self.view.frame.size.height - kCardYLoc - kCardDistanceFromBottom)];
-////        cardView.layer.transform = CATransform3DConcat(cardView.layer.transform, CATransform3DMakeRotation(DEGREES_TO_RADIANS(10),1.0,0.0,0.0));
-//        
-//        switch (i) {
-//            case 0:
-//                cardView.backgroundColor = [UIColor redColor];
-//                break;
-//            case 1:
-//                cardView.backgroundColor = [UIColor greenColor];
-//                break;
-//            case 2:
-//                cardView.backgroundColor = [UIColor blueColor];
-//                break;
-//            default:
-//                cardView.backgroundColor = [UIColor magentaColor];
-//                break;
-//        }
-//
-//        cardView.delegate = self;
-//        [self.cardContainer addSubview:cardView];
-//        [self.cardArray addObject:cardView];
-//    }
-    
     CardView *card1 = [[CardView alloc]initWithFrame:CGRectMake(0, 0, 320, 438.5)];
     card1.delegate = self;
     [self addCard:card1];
-    [card1 setLocation:[CardLocation locationForIndex:1]];
+    [card1 setLocation:[CardLocation locationForIndex:0]];
     
     CardView *card2 = [[CardView alloc]initWithFrame:CGRectMake(0, 0, 320, 438.5)];
     card2.delegate = self;
     [self addCard:card2];
-    [card2 setLocation:[CardLocation locationForIndex:2]];
+    [card2 setLocation:[CardLocation locationForIndex:1]];
     
     CardView *card3 = [[CardView alloc]initWithFrame:CGRectMake(0, 0, 320, 438.5)];
     card3.delegate = self;
     [self addCard:card3];
-    [card3 setLocation:[CardLocation locationForIndex:3]];
+    [card3 setLocation:[CardLocation locationForIndex:2]];
 }
+
+- (void)moveCardDeck:(CardDeckAnimateDirection)direction {
+    NSLog(@"----Current Card: %d ------",self.currentCardIdx);
+    if(direction == CardDeckAnimateDirectionPrev) {
+       [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+           
+            if(self.currentCardIdx - 1 >= 0) {
+               [self.cardArray[self.currentCardIdx - 1] setLocation:[CardLocation locationForIndex:0]];
+            }
+           
+            [self.cardArray[self.currentCardIdx] setLocation:[CardLocation locationForIndex:1]];
+           
+            if(self.currentCardIdx + 1 < self.cardArray.count) {
+                [self.cardArray[self.currentCardIdx + 1] setLocation:[CardLocation locationForIndex:2]];
+            }
+            if(self.currentCardIdx + 2 < self.cardArray.count) {
+                [self.cardArray[self.currentCardIdx + 2] setLocation:[CardLocation locationForIndex:3]];
+            }
+            if(self.currentCardIdx + 3 < self.cardArray.count) {
+                [self.cardArray[self.currentCardIdx + 3] setLocation:[CardLocation locationForIndex:4]];
+            }
+        } completion:^(BOOL finished) {
+            self.currentCardIdx += 1;
+        }];
+        
+    } else if(direction == CardDeckAnimateDirectionNext) {
+        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            if(self.currentCardIdx - 2 >= 0) {
+                [self.cardArray[self.currentCardIdx - 2] setLocation:[CardLocation locationForIndex:1]];
+            }
+            if(self.currentCardIdx - 1 >= 0) {
+                [self.cardArray[self.currentCardIdx - 1] setLocation:[CardLocation locationForIndex:2]];
+            }
+            [self.cardArray[self.currentCardIdx] setLocation:[CardLocation locationForIndex:3]];
+            if(self.currentCardIdx + 1 < self.cardArray.count) {
+                [self.cardArray[self.currentCardIdx + 1] setLocation:[CardLocation locationForIndex:4]];
+            }
+            if(self.currentCardIdx + 2 < self.cardArray.count) {
+                [self.cardArray[self.currentCardIdx + 2] setLocation:[CardLocation locationForIndex:5]];
+            }
+        } completion:^(BOOL finished) {
+            self.currentCardIdx -= 1;
+        }];
+    }
+}
+
 
 - (void)addCard:(CardView *)card {
     [self.cardContainer addSubview:card];
