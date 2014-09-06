@@ -8,6 +8,8 @@
 
 #import "CardView.h"
 
+static const CGFloat kBottomThreshold = 438.5;
+
 @interface CardView () <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *table;
@@ -54,26 +56,36 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    [self.delegate endedDraggingWithCardView:self];
+    if([self isAtTop] || [self isAtBottom]) {
+        [self.delegate endedDraggingWithCardView:self];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.table scrollRectToVisible:CGRectMake(0, 0, 0, 0) animated:NO];
     
-    CGFloat bottomThreshold = 438.5;
     if(scrollView.isDragging) {
-        if(scrollView.contentOffset.y >= bottomThreshold) { // FIGURE OUT THIS NUMBER
-            [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y + bottomThreshold withDirection:ScrollDirectionUp];
-        } else if (scrollView.contentOffset.y <= 0) {
+        if([self isAtBottom]) {
+            [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y + kBottomThreshold withDirection:ScrollDirectionUp];
+        } else if ([self isAtTop]) {
             [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y withDirection:ScrollDirectionUp];
         }
     }
+}
+
+- (BOOL)isAtBottom {
+    return self.table.contentOffset.y >= kBottomThreshold;
+}
+
+- (BOOL)isAtTop {
+    return self.table.contentOffset.y <= 0;
 }
 
 - (void)setLocation:(CardLocation *)cardLocation {
     self.center = cardLocation.center;
     self.alpha = cardLocation.alpha;
     self.layer.affineTransform = cardLocation.transform;
+    self.lastLocation = cardLocation.locationIndex;
 }
 
 @end

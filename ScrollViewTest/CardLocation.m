@@ -35,29 +35,30 @@
 
 @implementation CardLocation
 
-+ (instancetype)locationWithCenter:(CGPoint)center alpha:(CGFloat)alpha transform:(CGAffineTransform)transform {
++ (instancetype)locationWithCenter:(CGPoint)center alpha:(CGFloat)alpha transform:(CGAffineTransform)transform index:(NSInteger)index {
     CardLocation *location = [[CardLocation alloc]init];
     location.center = center;
     location.alpha = alpha;
     location.transform = transform;
+    location.locationIndex = index;
     return location;
 }
 
-+ (instancetype)locationForIndex:(int)index {
++ (instancetype)locationForIndex:(NSInteger)index {
 
     switch (index) {
         case 0:
-            return [CardLocation locationWithCenter:CGPointMake(160, center0) alpha:alpha0 transform:CGAffineTransformMakeScale(transform0, transform0)];
+            return [CardLocation locationWithCenter:CGPointMake(160, center0) alpha:alpha0 transform:CGAffineTransformMakeScale(transform0, transform0) index:0];
         case 1:
-            return [CardLocation locationWithCenter:CGPointMake(160, center1) alpha:alpha1 transform:CGAffineTransformMakeScale(transform1, transform1)];
+            return [CardLocation locationWithCenter:CGPointMake(160, center1) alpha:alpha1 transform:CGAffineTransformMakeScale(transform1, transform1) index:1];
         case 2:
-            return [CardLocation locationWithCenter:CGPointMake(160, center2) alpha:alpha2 transform:CGAffineTransformMakeScale(transform2, transform2)];
+            return [CardLocation locationWithCenter:CGPointMake(160, center2) alpha:alpha2 transform:CGAffineTransformMakeScale(transform2, transform2) index:2];
         case 3:
-            return [CardLocation locationWithCenter:CGPointMake(160, center3) alpha:alpha3 transform:CGAffineTransformMakeScale(transform3, transform3)];
+            return [CardLocation locationWithCenter:CGPointMake(160, center3) alpha:alpha3 transform:CGAffineTransformMakeScale(transform3, transform3) index:3];
         case 4:
-            return [CardLocation locationWithCenter:CGPointMake(160, center4) alpha:alpha4 transform:CGAffineTransformMakeScale(transform4, transform4)];
+            return [CardLocation locationWithCenter:CGPointMake(160, center4) alpha:alpha4 transform:CGAffineTransformMakeScale(transform4, transform4) index:4];
         case 5:
-            return [CardLocation locationWithCenter:CGPointMake(160, center5) alpha:alpha5 transform:CGAffineTransformMakeScale(transform5, transform5)];
+            return [CardLocation locationWithCenter:CGPointMake(160, center5) alpha:alpha5 transform:CGAffineTransformMakeScale(transform5, transform5) index:5];
     }
     return nil;
 }
@@ -71,16 +72,12 @@
     location.alpha = start.alpha + (end.alpha - start.alpha)*distancePercent;
     CGFloat newTrans = start.transform.a + (end.transform.a - start.transform.a)*distancePercent;
     location.transform = CGAffineTransformMakeScale(newTrans, newTrans);
-    NSLog(@"LOC: %@", location);
+    location.locationIndex = start.locationIndex;
     return location;
 }
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"Center Y: %f Alpha: %f Affine: %f",self.center.y,self.alpha,self.transform.a];
 }
-
-//- (instancetype)locationForCurrent:(
-
-
 
 @end

@@ -30,6 +30,7 @@ typedef enum ScrollDirection {
 
 - (void)setLocation:(CardLocation *)cardLocation;
 
+@property (nonatomic) NSInteger lastLocation;
 @property (nonatomic, weak) id<CardViewDelegate> delegate;
 
 @end

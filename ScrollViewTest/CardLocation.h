@@ -25,9 +25,10 @@ extern CGFloat const transform3;
 @property (nonatomic) CGPoint center;
 @property (nonatomic) CGAffineTransform transform;
 @property (nonatomic) CGFloat alpha;
+@property (nonatomic) NSInteger locationIndex;
 
-+ (instancetype)locationWithCenter:(CGPoint)center alpha:(CGFloat)alpha transform:(CGAffineTransform)transform;
-+ (instancetype)locationForIndex:(int)index;
++ (instancetype)locationWithCenter:(CGPoint)center alpha:(CGFloat)alpha transform:(CGAffineTransform)transform index:(NSInteger)index;
++ (instancetype)locationForIndex:(NSInteger)index;
 + (instancetype)locationForStart:(NSInteger)startIdx end:(NSInteger)endIdx distancePercentage:(CGFloat)distancePercent;
 
 
