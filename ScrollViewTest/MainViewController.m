@@ -23,6 +23,8 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 @property (nonatomic, strong) NSMutableArray *cardArray;
 @property (nonatomic) NSInteger currentCardIdx;
 
+@property (nonatomic) CGFloat lastYOffset;
+
 @end
 
 @implementation MainViewController
@@ -79,6 +81,8 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     card3.delegate = self;
     [self addCard:card3];
     [card3 setLocation:[CardLocation locationForIndex:2]];
+    
+    self.lastYOffset = card3.frame.origin.y;
 }
 
 - (void)moveCardDeck:(CardDeckAnimateDirection)direction {
@@ -133,30 +137,13 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 
 - (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset withDirection:(ScrollDirection)direction {
     CGRect oldFrame = cardView.frame;
-    oldFrame.origin.y = oldFrame.origin.y - offset;
+    NSLog(@"MVC: %f",offset);
+    oldFrame.origin.y = offset + self.lastYOffset;
     cardView.frame = oldFrame;
-    
-    CGFloat totalDist = 20.f;
-    NSLog(@"Offset: %f",offset);
-    CGFloat percentage = abs(offset/totalDist);
-    
-    
-//    if(direction == ScrollDirectionDown) {
-//        if(self.currentCardIdx - 2 >= 0) {
-//            [self.cardArray[self.currentCardIdx - 2] setLocation:[CardLocation locationForStart:0 end:1 distancePercentage:percentage]];
-//        }
-//        if(self.currentCardIdx - 1 >= 0) {
-//            [self.cardArray[self.currentCardIdx - 1] setLocation:[CardLocation locationForStart:1 end:2 distancePercentage:percentage]];
-//        }
-//        [self.cardArray[self.currentCardIdx] setLocation:[CardLocation locationForStart:2 end:3 distancePercentage:percentage]];
-//
-//        if(self.currentCardIdx + 1 < self.cardArray.count) {
-//            [self.cardArray[self.currentCardIdx + 1] setLocation:[CardLocation locationForStart:3 end:4 distancePercentage:percentage]];
-//        }
-//        if(self.currentCardIdx + 2 < self.cardArray.count) {
-//            [self.cardArray[self.currentCardIdx + 2] setLocation:[CardLocation locationForStart:4 end:5 distancePercentage:percentage]];
-//        }
-//    }
+}
+
+- (void)beganDraggingWithCardView:(CardView *)cardView {
+    self.lastYOffset = cardView.frame.origin.y;
 }
 
 

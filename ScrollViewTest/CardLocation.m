@@ -33,9 +33,6 @@ static const CGFloat alpha6 = .3f;
 static const CGFloat transform6 = 29/32.0;
 
 
-
-
-
 @implementation CardLocation
 
 + (instancetype)locationWithCenter:(CGPoint)center alpha:(CGFloat)alpha transform:(CGAffineTransform)transform {
@@ -76,6 +73,8 @@ static const CGFloat transform6 = 29/32.0;
     location.transform = CGAffineTransformMakeScale(newTrans, newTrans);
     return location;
 }
+
+//- (instancetype)locationForCurrent:(
 
 
 

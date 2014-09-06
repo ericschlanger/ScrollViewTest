@@ -28,7 +28,9 @@
         self.layer.cornerRadius = 5;
         self.clipsToBounds = YES;
         self.table.showsVerticalScrollIndicator = NO;
+        self.table.backgroundColor = [UIColor orangeColor];
         [self addSubview:_table];
+
         
         self.lastContentOffset = 0;
     }
@@ -44,33 +46,36 @@
     if(cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
+    cell.backgroundColor = [UIColor magentaColor];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"1");
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self.delegate beganDraggingWithCardView:self];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    ScrollDirection scrollDirection;
-    if (self.lastContentOffset > scrollView.contentOffset.y) {
-        scrollDirection = ScrollDirectionDown;
-    } else if (self.lastContentOffset < scrollView.contentOffset.y) {
-        scrollDirection = ScrollDirectionUp;
-    }
-    NSLog(@"CO: %f",scrollView.contentOffset.y);
-    NSLog(@"H: %f",self.table.contentSize.height);
-    if(scrollDirection == ScrollDirectionDown && scrollView.contentOffset.y <= 0) {
-        self.table.alwaysBounceVertical = NO;
-        [self.delegate cardView:self moveWithOffset:-1 withDirection:ScrollDirectionDown];
-    } else if(scrollDirection == ScrollDirectionUp && scrollView.contentOffset.y >= 400) { // FIGURE OUT THIS NUMBER
-        self.table.alwaysBounceVertical = NO;
-        [self.delegate cardView:self moveWithOffset:1 withDirection:ScrollDirectionUp];
-    } else {
-        self.table.alwaysBounceVertical = YES;
-    }
+//    ScrollDirection scrollDirection;
+//    if (self.lastContentOffset > scrollView.contentOffset.y) {
+//        scrollDirection = ScrollDirectionDown;
+//    } else if (self.lastContentOffset < scrollView.contentOffset.y) {
+//        scrollDirection = ScrollDirectionUp;
+//    }
+    NSLog(@"SVDS OF: %f",scrollView.contentOffset.y);
+    [self.table scrollRectToVisible:CGRectMake(0, 0, 0, 0) animated:NO];
     
-    self.lastContentOffset = scrollView.contentOffset.y;
+    CGFloat bottomThreshold = 438.5;
+    if(scrollView.isDragging) {
+        if(scrollView.contentOffset.y >= bottomThreshold) { // FIGURE OUT THIS NUMBER
+            [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y + bottomThreshold withDirection:ScrollDirectionUp];
+        } else if (scrollView.contentOffset.y <= 0) {
+            [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y withDirection:ScrollDirectionUp];
+        }
+    }
+    //self.lastContentOffset = -scrollView.contentOffset.y;
 }
 
 - (void)setLocation:(CardLocation *)cardLocation {
