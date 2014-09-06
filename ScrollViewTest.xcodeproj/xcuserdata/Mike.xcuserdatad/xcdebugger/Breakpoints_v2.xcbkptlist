@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScrollViewTest/MainViewController.m"
-            timestampString = "431658330.796055"
+            timestampString = "431659392.466138"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "-endedDraggingWithCardView:"
             landmarkType = "5">
          </BreakpointContent>
