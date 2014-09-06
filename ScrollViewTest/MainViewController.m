@@ -55,33 +55,40 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 - (void)setupCards {
     self.cardArray = [[NSMutableArray alloc]init];
     
-    CardView *card0 = [[CardView alloc]initWithFrame:CGRectMake(0, 0, 320, 438.5)];
+    CGRect cardFrame = CGRectMake(0, 0, 320, 438.5);
+    
+    CardView *card0 = [[CardView alloc]initWithFrame:cardFrame];
     card0.delegate = self;
     [card0 setLocation:[CardLocation locationForIndex:0]];
     
-    CardView *card1 = [[CardView alloc]initWithFrame:CGRectMake(0, 0, 320, 438.5)];
+    CardView *card1 = [[CardView alloc]initWithFrame:cardFrame];
     card1.delegate = self;
     [card1 setLocation:[CardLocation locationForIndex:1]];
     
-    CardView *card2 = [[CardView alloc]initWithFrame:CGRectMake(0, 0, 320, 438.5)];
+    CardView *card2 = [[CardView alloc]initWithFrame:cardFrame];
     card2.delegate = self;
     [card2 setLocation:[CardLocation locationForIndex:2]];
     
-    CardView *card3 = [[CardView alloc]initWithFrame:CGRectMake(0, 0, 320, 438.5)];
+    CardView *card3 = [[CardView alloc]initWithFrame:cardFrame];
     card3.delegate = self;
     [card3 setLocation:[CardLocation locationForIndex:3]];
     
-    CardView *card4 = [[CardView alloc]initWithFrame:CGRectMake(0, 0, 320, 438.5)];
+    CardView *card4 = [[CardView alloc]initWithFrame:cardFrame];
     card4.delegate = self;
     [card4 setLocation:[CardLocation locationForIndex:4]];
     
-    CardView *card5 = [[CardView alloc]initWithFrame:CGRectMake(0, 0, 320, 438.5)];
+    CardView *card5 = [[CardView alloc]initWithFrame:cardFrame];
     card5.delegate = self;
     [card5 setLocation:[CardLocation locationForIndex:5]];
+    
+    CardView *card6 = [[CardView alloc]initWithFrame:cardFrame];
+    card6.delegate = self;
+    [card6 setLocation:[CardLocation locationForIndex:5]];
     
     [self addCard:card0];
     [self addCard:card1];
     [self addCard:card2];
+    [self addCard:card6];
     [self addCard:card5];
     [self addCard:card4];
     [self addCard:card3];
