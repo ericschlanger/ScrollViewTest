@@ -56,14 +56,14 @@ static const CGFloat kBottomThreshold = 438.5;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if([self isAtTop] || [self isAtBottom]) {
-        [self.delegate endedDraggingWithCardView:self];
+    if([self isAtTop]) {
+        [self.delegate endedDraggingWithCardView:self withDirection:ScrollDirectionDown];
+    } else if([self isAtBottom]) {
+        [self.delegate endedDraggingWithCardView:self withDirection:ScrollDirectionUp];
     }
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.table scrollRectToVisible:CGRectMake(0, 0, 0, 0) animated:NO];
-    
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {    
     if(scrollView.isDragging) {
         if([self isAtBottom]) {
             [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y + kBottomThreshold withDirection:ScrollDirectionUp];

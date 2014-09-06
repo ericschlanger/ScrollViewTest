@@ -49,6 +49,7 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+
 }
 
 - (void)setupCards {
@@ -88,29 +89,28 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 }
 
 - (void)moveCardDeck:(CardDeckAnimateDirection)direction {
-    if(direction == CardDeckAnimateDirectionPrev) {
+    if(direction == CardDeckAnimateDirectionNext) {
        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
            
-            if(self.currentCardIdx - 1 >= 0) {
+           if(self.currentCardIdx - 1 >= 0) {
                [self.cardArray[self.currentCardIdx - 1] setLocation:[CardLocation locationForIndex:0]];
-            }
-            [self.cardArray[self.currentCardIdx] setLocation:[CardLocation locationForIndex:1]];
-           
-            if(self.currentCardIdx + 1 < self.cardArray.count) {
-                [self.cardArray[self.currentCardIdx + 1] setLocation:[CardLocation locationForIndex:2]];
-            }
-            if(self.currentCardIdx + 2 < self.cardArray.count) {
-                [self.cardArray[self.currentCardIdx + 2] setLocation:[CardLocation locationForIndex:3]];
-            }
-            if(self.currentCardIdx + 3 < self.cardArray.count) {
-                [self.cardArray[self.currentCardIdx + 3] setLocation:[CardLocation locationForIndex:4]];
-            }
+           }
+           [self.cardArray[self.currentCardIdx] setLocation:[CardLocation locationForIndex:1]];
+           if(self.currentCardIdx + 1 < self.cardArray.count) {
+               [self.cardArray[self.currentCardIdx + 1] setLocation:[CardLocation locationForIndex:2]];
+           }
+           if(self.currentCardIdx + 2 < self.cardArray.count) {
+               [self.cardArray[self.currentCardIdx + 2] setLocation:[CardLocation locationForIndex:3]];
+           }
+           if(self.currentCardIdx + 3 < self.cardArray.count) {
+               [self.cardArray[self.currentCardIdx + 3] setLocation:[CardLocation locationForIndex:4]];
+           }
         } completion:^(BOOL finished) {
             self.currentCardIdx += 1;
             [self currentCardChanged];
         }];
         
-    } else if(direction == CardDeckAnimateDirectionNext) {
+    } else if(direction == CardDeckAnimateDirectionPrev) {
         [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
             if(self.currentCardIdx - 2 >= 0) {
                 [self.cardArray[self.currentCardIdx - 2] setLocation:[CardLocation locationForIndex:1]];
@@ -177,14 +177,24 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     }];
 }
 
-- (void)endedDraggingWithCardView:(CardView *)cardView {
+- (void)endedDraggingWithCardView:(CardView *)cardView withDirection:(ScrollDirection)direction {
     
-    CGFloat distanceTraveled = cardView.center.y - [CardLocation locationForIndex:self.currentCardIdx].center.y;
-    NSLog(@"DT: %f",distanceTraveled);
-    if(distanceTraveled >= kThreshold) {
-        [self moveCardDeck:CardDeckAnimateDirectionNext];
-    } else if(distanceTraveled <= -kThreshold) {
+    // Thresholding
+    CGFloat distanceTraveled = abs(cardView.center.y - [CardLocation locationForIndex:self.currentCardIdx].center.y);
+    BOOL overThreshold = distanceTraveled >= kThreshold;
+    
+    // Limits
+    BOOL isFirstCard = (self.currentCardIdx == 0);
+    BOOL isLastCard = (self.currentCardIdx == self.cardArray.count -1);
+    
+    // Direction
+    BOOL isDown = ScrollDirectionDown == direction;
+    BOOL isUp = ScrollDirectionUp == direction;
+    
+    if(overThreshold && isDown && !isFirstCard) {
         [self moveCardDeck:CardDeckAnimateDirectionPrev];
+    } else if(overThreshold && isUp && !isLastCard) {
+        [self moveCardDeck:CardDeckAnimateDirectionNext];
     } else {
         [self animateToStableState];
     }
