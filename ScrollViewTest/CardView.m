@@ -54,17 +54,10 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    [self.delegate beganDraggingWithCardView:self];
+    [self.delegate endedDraggingWithCardView:self];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    ScrollDirection scrollDirection;
-//    if (self.lastContentOffset > scrollView.contentOffset.y) {
-//        scrollDirection = ScrollDirectionDown;
-//    } else if (self.lastContentOffset < scrollView.contentOffset.y) {
-//        scrollDirection = ScrollDirectionUp;
-//    }
-    NSLog(@"SVDS OF: %f",scrollView.contentOffset.y);
     [self.table scrollRectToVisible:CGRectMake(0, 0, 0, 0) animated:NO];
     
     CGFloat bottomThreshold = 438.5;
@@ -75,7 +68,6 @@
             [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y withDirection:ScrollDirectionUp];
         }
     }
-    //self.lastContentOffset = -scrollView.contentOffset.y;
 }
 
 - (void)setLocation:(CardLocation *)cardLocation {

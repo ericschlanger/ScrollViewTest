@@ -8,29 +8,29 @@
 
 #import "CardLocation.h"
 
-static const CGFloat center1 = 245;
-static const CGFloat alpha1 = .3f;
-static const CGFloat transform1 = 29/32.0;
+ const CGFloat center1 = 245;
+ const CGFloat alpha1 = .3f;
+ const CGFloat transform1 = 29/32.0;
 
-static const CGFloat center2 = 270;
-static const CGFloat alpha2 = .5f;
-static const CGFloat transform2 = 31/32.f;
+ const CGFloat center2 = 270;
+ const CGFloat alpha2 = .5f;
+ const CGFloat transform2 = 31/32.f;
 
-static const CGFloat center3 = 289;
-static const CGFloat alpha3 = 1.f;
-static const CGFloat transform3 = 1;
+ const CGFloat center3 = 289;
+ const CGFloat alpha3 = 1.f;
+ const CGFloat transform3 = 1;
 
-static const CGFloat center4 = 500;
-static const CGFloat alpha4 = 1.f;
-static const CGFloat transform4 = 1;
+ const CGFloat center4 = 500;
+ const CGFloat alpha4 = 1.f;
+ const CGFloat transform4 = 1;
 
-static const CGFloat center5 = 490;
-static const CGFloat alpha5 = .5f;
-static const CGFloat transform5 = 31/32.f;
+ const CGFloat center5 = 490;
+ const CGFloat alpha5 = .5f;
+ const CGFloat transform5 = 31/32.f;
 
-static const CGFloat center6 = 480;
-static const CGFloat alpha6 = .3f;
-static const CGFloat transform6 = 29/32.0;
+ const CGFloat center6 = 480;
+ const CGFloat alpha6 = .3f;
+ const CGFloat transform6 = 29/32.0;
 
 
 @implementation CardLocation
@@ -71,7 +71,12 @@ static const CGFloat transform6 = 29/32.0;
     location.alpha = start.alpha + (end.alpha - start.alpha)*distancePercent;
     CGFloat newTrans = start.transform.a + (end.transform.a - start.transform.a)*distancePercent;
     location.transform = CGAffineTransformMakeScale(newTrans, newTrans);
+    NSLog(@"LOC: %@", location);
     return location;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"Center Y: %f Alpha: %f Affine: %f",self.center.y,self.alpha,self.transform.a];
 }
 
 //- (instancetype)locationForCurrent:(

@@ -10,28 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScrollViewTest/MainViewController.m"
-            timestampString = "431655396.523857"
+            timestampString = "431658330.796055"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
-            landmarkName = "-cardView:moveWithOffset:withDirection:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ScrollViewTest/MainViewController.m"
-            timestampString = "431655396.523857"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "-beganDraggingWithCardView:"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "-endedDraggingWithCardView:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

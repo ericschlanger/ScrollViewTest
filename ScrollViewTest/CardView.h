@@ -22,7 +22,7 @@ typedef enum ScrollDirection {
 @protocol CardViewDelegate
 
 - (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset withDirection:(ScrollDirection)direction;
-- (void)beganDraggingWithCardView:(CardView *)cardView;
+- (void)endedDraggingWithCardView:(CardView *)cardView;
 
 @end
 

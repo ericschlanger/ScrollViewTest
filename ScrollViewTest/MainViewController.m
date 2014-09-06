@@ -12,6 +12,8 @@
 
 #import "CardLocation.h"
 
+static const CGFloat kThreshold = 50;
+
 typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     CardDeckAnimateDirectionPrev,
     CardDeckAnimateDirectionNext
@@ -50,18 +52,6 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self moveCardDeck:CardDeckAnimateDirectionNext];
-//    });
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self moveCardDeck:CardDeckAnimateDirectionNext];
-//    });
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self moveCardDeck:CardDeckAnimateDirectionPrev];
-//    });
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self moveCardDeck:CardDeckAnimateDirectionPrev];
-//    });
 }
 
 - (void)setupCards {
@@ -82,11 +72,10 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     [self addCard:card3];
     [card3 setLocation:[CardLocation locationForIndex:2]];
     
-    self.lastYOffset = card3.frame.origin.y;
+    self.lastYOffset = card3.center.y;
 }
 
 - (void)moveCardDeck:(CardDeckAnimateDirection)direction {
-    NSLog(@"----Current Card: %d ------",self.currentCardIdx);
     if(direction == CardDeckAnimateDirectionPrev) {
        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
            
@@ -136,14 +125,19 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 }
 
 - (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset withDirection:(ScrollDirection)direction {
-    CGRect oldFrame = cardView.frame;
-    NSLog(@"MVC: %f",offset);
-    oldFrame.origin.y = offset + self.lastYOffset;
-    cardView.frame = oldFrame;
+    cardView.center = CGPointMake(cardView.center.x, offset + self.lastYOffset);
+    
+    CardView *card = self.cardArray[self.currentCardIdx-1];
+    CGFloat ratio = offset/kThreshold;
+    if(ratio > 1) {
+        ratio = 1;
+    }
+    
+    [card setLocation:[CardLocation locationForStart:1 end:2 distancePercentage:ratio]];
 }
 
-- (void)beganDraggingWithCardView:(CardView *)cardView {
-    self.lastYOffset = cardView.frame.origin.y;
+- (void)endedDraggingWithCardView:(CardView *)cardView {
+    self.lastYOffset = cardView.center.y;
 }
 
 
