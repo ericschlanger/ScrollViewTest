@@ -22,6 +22,7 @@ typedef enum ScrollDirection {
 @protocol CardViewDelegate
 
 - (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset withDirection:(ScrollDirection)direction;
+- (void)cardViewDidMoveHalfWay:(CardView *)cardView aboveHalfwayMark:(BOOL)isAbove;
 - (void)endedDraggingWithCardView:(CardView *)cardView withDirection:(ScrollDirection)direction;
 
 @end
@@ -29,6 +30,7 @@ typedef enum ScrollDirection {
 @interface CardView : UIView
 
 - (void)setLocation:(CardLocation *)cardLocation;
+- (void)scrollCardToTop;
 
 @property (nonatomic) NSInteger lastLocation;
 @property (nonatomic, weak) id<CardViewDelegate> delegate;

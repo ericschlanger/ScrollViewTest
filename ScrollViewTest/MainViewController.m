@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 @property (nonatomic, strong) UIView *cardContainer;
 @property (nonatomic, strong) NSMutableArray *cardArray;
 @property (nonatomic) NSInteger currentCardIdx;
+
 @end
 
 @implementation MainViewController
@@ -45,7 +46,6 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     [self.view addSubview:self.cardContainer];
     
     [self setupCards];
-    self.currentCardIdx = 2;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -57,48 +57,54 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     
     CGRect cardFrame = CGRectMake(0, 0, 320, 438.5);
     
-    CardView *card0 = [[CardView alloc]initWithFrame:cardFrame];
-    card0.delegate = self;
-    [card0 setLocation:[CardLocation locationForIndex:0]];
+    NSInteger numOfCards = 6;
     
-    CardView *card1 = [[CardView alloc]initWithFrame:cardFrame];
-    card1.delegate = self;
-    [card1 setLocation:[CardLocation locationForIndex:1]];
+    for(int i=0;i<numOfCards;i++) {
+        CardView *card = [[CardView alloc] initWithFrame:cardFrame];
+        card.delegate = self;
+        [card setLocation:[CardLocation locationForIndex:i]];
+        card.backgroundColor = [UIColor grayColor];
+        [self.cardArray addObject:card];
+    }
     
-    CardView *card2 = [[CardView alloc]initWithFrame:cardFrame];
-    card2.delegate = self;
-    [card2 setLocation:[CardLocation locationForIndex:2]];
+    for(int i=0;i<=2;i++) {
+        if(self.cardArray.count > i) {
+            [self.cardContainer addSubview:self.cardArray[i]];
+        } else {
+            break;
+        }
+    }
     
-    CardView *card3 = [[CardView alloc]initWithFrame:cardFrame];
-    card3.delegate = self;
-    [card3 setLocation:[CardLocation locationForIndex:3]];
+    for(int i=numOfCards - 1;i>=3;i--) {
+        if(self.cardArray.count >= i) {
+            [self.cardContainer addSubview:self.cardArray[i]];
+        } else {
+            break;
+        }
+    }
     
-    CardView *card4 = [[CardView alloc]initWithFrame:cardFrame];
-    card4.delegate = self;
-    [card4 setLocation:[CardLocation locationForIndex:4]];
+    // Edge cases (1 & 2 cards)
+    if(numOfCards == 2) {
+        CardView *card = self.cardArray[0];
+        [card setLocation:[CardLocation locationForIndex:1]];
+        CardView *cardTwo = self.cardArray[1];
+        [cardTwo setLocation:[CardLocation locationForIndex:2]];
+    } else if(numOfCards == 1) {
+        CardView *card = self.cardArray[0];
+        [card setLocation:[CardLocation locationForIndex:2]];
+    }
+    self.currentCardIdx = numOfCards <= 2 ? numOfCards - 1 : 2;
     
-    CardView *card5 = [[CardView alloc]initWithFrame:cardFrame];
-    card5.delegate = self;
-    [card5 setLocation:[CardLocation locationForIndex:5]];
-    
-    CardView *card6 = [[CardView alloc]initWithFrame:cardFrame];
-    card6.delegate = self;
-    [card6 setLocation:[CardLocation locationForIndex:5]];
-    
-    [self addCard:card0];
-    [self addCard:card1];
-    [self addCard:card2];
-    [self addCard:card6];
-    [self addCard:card5];
-    [self addCard:card4];
-    [self addCard:card3];
-    
+    [self disableAllCardsExceptIndex:self.currentCardIdx];
+    [self.cardContainer bringSubviewToFront:self.cardArray[self.currentCardIdx]];
 }
 
-- (void)moveCardDeck:(CardDeckAnimateDirection)direction {
+- (void)moveCardDeck:(CardDeckAnimateDirection)direction animated:(BOOL)animated {
+    NSTimeInterval duration = animated ? .3 : 0;
+    self.view.userInteractionEnabled = NO;
     if(direction == CardDeckAnimateDirectionNext) {
-       [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
-           
+        [self disableAllCardsExceptIndex:self.currentCardIdx + 1];
+       [UIView animateWithDuration:duration delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
            if(self.currentCardIdx - 1 >= 0) {
                [self.cardArray[self.currentCardIdx - 1] setLocation:[CardLocation locationForIndex:0]];
            }
@@ -113,12 +119,15 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
                [self.cardArray[self.currentCardIdx + 3] setLocation:[CardLocation locationForIndex:4]];
            }
         } completion:^(BOOL finished) {
+            CardView *currentCard = self.cardArray[self.currentCardIdx];
+            [currentCard scrollCardToTop];
             self.currentCardIdx += 1;
-            [self currentCardChanged];
+            self.view.userInteractionEnabled = YES;
         }];
         
     } else if(direction == CardDeckAnimateDirectionPrev) {
-        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [self disableAllCardsExceptIndex:self.currentCardIdx - 1];
+        [UIView animateWithDuration:duration delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
             if(self.currentCardIdx - 2 >= 0) {
                 [self.cardArray[self.currentCardIdx - 2] setLocation:[CardLocation locationForIndex:1]];
             }
@@ -133,16 +142,17 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
                 [self.cardArray[self.currentCardIdx + 2] setLocation:[CardLocation locationForIndex:5]];
             }
         } completion:^(BOOL finished) {
+            CardView *currentCard = self.cardArray[self.currentCardIdx];
+            [currentCard scrollCardToTop];
             self.currentCardIdx -= 1;
-            [self currentCardChanged];
+            self.view.userInteractionEnabled = YES;
         }];
     }
 }
 
-- (void)currentCardChanged {
-    [self.view bringSubviewToFront:self.cardArray[self.currentCardIdx]];
+- (void)disableAllCardsExceptIndex:(NSInteger)index {
     [self.cardArray enumerateObjectsUsingBlock:^(CardView *card, NSUInteger idx, BOOL *stop) {
-        if(idx != self.currentCardIdx) {
+        if(idx != index) {
             card.userInteractionEnabled = NO;
         } else {
             card.userInteractionEnabled = YES;
@@ -159,16 +169,9 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     
 }
 
-
-- (void)addCard:(CardView *)card {
-    [self.cardContainer addSubview:card];
-    [self.cardArray addObject:card];
-}
-
 - (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset withDirection:(ScrollDirection)direction {
+    [self.cardContainer bringSubviewToFront:cardView];
     cardView.center = CGPointMake(cardView.center.x, offset + [CardLocation locationForIndex:2].center.y);
-
-    
     CGFloat ratio = offset/kThreshold;
     if(ratio > 1) {
         ratio = 1;
@@ -182,6 +185,14 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
             }
         }
     }];
+}
+
+- (void)cardViewDidMoveHalfWay:(CardView *)cardView aboveHalfwayMark:(BOOL)isAbove {
+    if(!isAbove && self.currentCardIdx + 1 < self.cardArray.count) {
+        [self.cardContainer bringSubviewToFront:self.cardArray[self.currentCardIdx+1]];
+    } else if(isAbove) {
+        [self.cardContainer bringSubviewToFront:self.cardArray[self.currentCardIdx]];
+    }
 }
 
 - (void)endedDraggingWithCardView:(CardView *)cardView withDirection:(ScrollDirection)direction {
@@ -199,9 +210,9 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     BOOL isUp = ScrollDirectionUp == direction;
     
     if(overThreshold && isDown && !isFirstCard) {
-        [self moveCardDeck:CardDeckAnimateDirectionPrev];
+        [self moveCardDeck:CardDeckAnimateDirectionPrev animated:YES];
     } else if(overThreshold && isUp && !isLastCard) {
-        [self moveCardDeck:CardDeckAnimateDirectionNext];
+        [self moveCardDeck:CardDeckAnimateDirectionNext animated:YES];
     } else {
         [self animateToStableState];
     }

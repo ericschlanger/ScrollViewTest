@@ -14,6 +14,7 @@ static const CGFloat kBottomThreshold = 438.5;
 
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic, assign) CGFloat lastContentOffset;
+
 @end
 
 @implementation CardView
@@ -30,10 +31,9 @@ static const CGFloat kBottomThreshold = 438.5;
         self.layer.cornerRadius = 5;
         self.clipsToBounds = YES;
         self.table.showsVerticalScrollIndicator = NO;
-        self.table.backgroundColor = [UIColor orangeColor];
+        self.table.backgroundColor = [UIColor clearColor];
         [self addSubview:_table];
 
-        
         self.lastContentOffset = 0;
     }
     return self;
@@ -48,7 +48,7 @@ static const CGFloat kBottomThreshold = 438.5;
     if(cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
-    cell.backgroundColor = [UIColor magentaColor];
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
@@ -63,12 +63,21 @@ static const CGFloat kBottomThreshold = 438.5;
     }
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {    
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    ScrollDirection scrollDirection = ScrollDirectionNone;
+    if (self.lastContentOffset > scrollView.contentOffset.y) {
+        scrollDirection = ScrollDirectionUp;
+    } else if (self.lastContentOffset < scrollView.contentOffset.y) {
+        scrollDirection = ScrollDirectionDown;
+    }
+    
+    self.lastContentOffset = scrollView.contentOffset.y;
+
     if(scrollView.isDragging) {
         if([self isAtBottom]) {
             [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y + kBottomThreshold withDirection:ScrollDirectionUp];
         } else if ([self isAtTop]) {
-            [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y withDirection:ScrollDirectionUp];
+            [self.delegate cardView:self moveWithOffset:-scrollView.contentOffset.y withDirection:ScrollDirectionDown];
         }
     }
 }
@@ -86,6 +95,10 @@ static const CGFloat kBottomThreshold = 438.5;
     self.alpha = cardLocation.alpha;
     self.layer.affineTransform = cardLocation.transform;
     self.lastLocation = cardLocation.locationIndex;
+}
+
+- (void)scrollCardToTop {
+    [self.table setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 @end
