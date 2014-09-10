@@ -25,6 +25,10 @@ typedef enum ScrollDirection {
 - (void)cardViewDidMoveHalfWay:(CardView *)cardView aboveHalfwayMark:(BOOL)isAbove;
 - (void)endedDraggingWithCardView:(CardView *)cardView withDirection:(ScrollDirection)direction;
 
+- (NSInteger)cardView:(CardView *)cardView numberOfRowsinSection:(NSInteger)section;
+- (UITableViewCell *)cardView:(CardView *)cardView cellForIndexAtPath:(NSIndexPath*)indexPath;
+- (void)cardView:(CardView *)cardView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 @interface CardView : UIView
@@ -34,5 +38,6 @@ typedef enum ScrollDirection {
 
 @property (nonatomic) NSInteger lastLocation;
 @property (nonatomic, weak) id<CardViewDelegate> delegate;
+@property (nonatomic, strong) UITableView *table;
 
 @end

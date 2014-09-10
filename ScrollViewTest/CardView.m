@@ -12,13 +12,11 @@ static const CGFloat kBottomThreshold = 438.5;
 
 @interface CardView () <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UITableView *table;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 
 @end
 
 @implementation CardView
-
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -37,22 +35,6 @@ static const CGFloat kBottomThreshold = 438.5;
         self.lastContentOffset = 0;
     }
     return self;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    if(cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    }
-    cell.backgroundColor = [UIColor clearColor];
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -99,6 +81,19 @@ static const CGFloat kBottomThreshold = 438.5;
 
 - (void)scrollCardToTop {
     [self.table setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+
+#pragma mark - TableView Delgate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.delegate cardView:self didSelectRowAtIndexPath:indexPath];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.delegate cardView:self numberOfRowsinSection:section];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.delegate cardView:self cellForIndexAtPath:indexPath];
 }
 
 @end

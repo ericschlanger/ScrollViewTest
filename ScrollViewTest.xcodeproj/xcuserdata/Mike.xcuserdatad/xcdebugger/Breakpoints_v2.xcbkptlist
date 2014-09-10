@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScrollViewTest/CardView.m"
-            timestampString = "431918902.8221"
+            timestampString = "432002251.924541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "-scrollCardToTop"
             landmarkType = "5">
          </BreakpointContent>
@@ -25,14 +25,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ScrollViewTest/MainViewController.m"
-            timestampString = "431918964.005201"
+            filePath = "ScrollViewTest/CardDeck.m"
+            timestampString = "432003124.718027"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
-            landmarkName = "-endedDraggingWithCardView:withDirection:"
-            landmarkType = "5">
+            startingLineNumber = "229"
+            endingLineNumber = "229">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -41,14 +39,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ScrollViewTest/MainViewController.m"
-            timestampString = "431918964.005201"
+            filePath = "ScrollViewTest/CardDeck.m"
+            timestampString = "432003124.718027"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "-endedDraggingWithCardView:withDirection:"
-            landmarkType = "5">
+            startingLineNumber = "227"
+            endingLineNumber = "227">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -57,14 +53,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ScrollViewTest/MainViewController.m"
-            timestampString = "431918964.005201"
+            filePath = "ScrollViewTest/CardDeck.m"
+            timestampString = "432003124.718027"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
-            landmarkName = "-endedDraggingWithCardView:withDirection:"
-            landmarkType = "5">
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "@implementation CardDeck"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -73,14 +69,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ScrollViewTest/MainViewController.m"
-            timestampString = "431918964.005201"
+            filePath = "ScrollViewTest/CardDeck.m"
+            timestampString = "432003124.718027"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "-endedDraggingWithCardView:withDirection:"
-            landmarkType = "5">
+            startingLineNumber = "228"
+            endingLineNumber = "228">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

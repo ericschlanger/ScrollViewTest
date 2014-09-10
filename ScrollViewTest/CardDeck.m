@@ -1,12 +1,12 @@
 //
-//  MainViewController.m
+//  CardDeck.m
 //  ScrollViewTest
 //
 //  Created by Michael MacDougall on 9/3/14.
 //  Copyright (c) 2014 Michael MacDougall. All rights reserved.
 //
 
-#import "MainViewController.h"
+#import "CardDeck.h"
 
 #import "CardView.h"
 
@@ -19,7 +19,7 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     CardDeckAnimateDirectionNext
 };
 
-@interface MainViewController () <CardViewDelegate>
+@interface CardDeck () <CardViewDelegate>
 
 @property (nonatomic, strong) UIView *cardContainer;
 @property (nonatomic, strong) NSMutableArray *cardArray;
@@ -27,47 +27,35 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 
 @end
 
-@implementation MainViewController
+@implementation CardDeck
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+- (id)initWithFrame:(CGRect)frame andNumberOfCards:(NSInteger)numOfCards {
+    self = [super initWithFrame:frame];
+    if(self) {
+        self.cardContainer = [[UIView alloc] initWithFrame:self.bounds];
+        self.cardContainer.backgroundColor = [UIColor blueColor];
+        [self addSubview:self.cardContainer];
+        [self setupCardsWithNumOfCards:numOfCards];
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.cardContainer = [[UIView alloc] initWithFrame:self.view.bounds];
-    self.cardContainer.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:self.cardContainer];
-    
-    [self setupCards];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-
-}
-
-- (void)setupCards {
+- (void)setupCardsWithNumOfCards:(NSInteger)numOfCards {
     self.cardArray = [[NSMutableArray alloc]init];
     
     CGRect cardFrame = CGRectMake(0, 0, 320, 438.5);
     
-    NSInteger numOfCards = 6;
     
-    for(int i=0;i<numOfCards;i++) {
+    for(NSInteger i=0;i<numOfCards;i++) {
         CardView *card = [[CardView alloc] initWithFrame:cardFrame];
+        card.tag = i;
         card.delegate = self;
         [card setLocation:[CardLocation locationForIndex:i]];
         card.backgroundColor = [UIColor grayColor];
         [self.cardArray addObject:card];
     }
     
-    for(int i=0;i<=2;i++) {
+    for(NSInteger i=0;i<=2;i++) {
         if(self.cardArray.count > i) {
             [self.cardContainer addSubview:self.cardArray[i]];
         } else {
@@ -75,7 +63,7 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
         }
     }
     
-    for(int i=numOfCards - 1;i>=3;i--) {
+    for(NSInteger i=numOfCards - 1;i>=3;i--) {
         if(self.cardArray.count >= i) {
             [self.cardContainer addSubview:self.cardArray[i]];
         } else {
@@ -101,7 +89,7 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 
 - (void)moveCardDeck:(CardDeckAnimateDirection)direction animated:(BOOL)animated {
     NSTimeInterval duration = animated ? .3 : 0;
-    self.view.userInteractionEnabled = NO;
+    self.userInteractionEnabled = NO;
     if(direction == CardDeckAnimateDirectionNext) {
         [self disableAllCardsExceptIndex:self.currentCardIdx + 1];
        [UIView animateWithDuration:duration delay:0 usingSpringWithDamping:1 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -122,7 +110,7 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
             CardView *currentCard = self.cardArray[self.currentCardIdx];
             [currentCard scrollCardToTop];
             self.currentCardIdx += 1;
-            self.view.userInteractionEnabled = YES;
+            self.userInteractionEnabled = YES;
         }];
         
     } else if(direction == CardDeckAnimateDirectionPrev) {
@@ -145,7 +133,7 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
             CardView *currentCard = self.cardArray[self.currentCardIdx];
             [currentCard scrollCardToTop];
             self.currentCardIdx -= 1;
-            self.view.userInteractionEnabled = YES;
+            self.userInteractionEnabled = YES;
         }];
     }
 }
@@ -217,6 +205,21 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
         [self animateToStableState];
     }
 }
+
+- (NSInteger)cardView:(CardView *)cardView numberOfRowsinSection:(NSInteger)section {
+    return [self.delegate cardDeck:self numberOfRowsInSection:section forCard:cardView];
+}
+
+- (UITableViewCell *)cardView:(CardView *)cardView cellForIndexAtPath:(NSIndexPath *)indexPath {
+    return [self.delegate cardDeck:self cellForRowAtIndexPath:indexPath withCard:cardView];
+}
+
+- (void)cardView:(CardView *)cardView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.delegate cardDeck:self didSelectRowAtIndexPath:indexPath withCard:cardView];
+}
+
+
+
 
 
 

@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		27006E1119B7DB5800C54988 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27006E1019B7DB5800C54988 /* MainViewController.m */; };
+		27006E1119B7DB5800C54988 /* CardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 27006E1019B7DB5800C54988 /* CardDeck.m */; };
 		27006E1419B7EE5900C54988 /* CardLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27006E1319B7EE5900C54988 /* CardLocation.m */; };
+		27006E1719BFCC5E00C54988 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27006E1619BFCC5E00C54988 /* ViewController.m */; };
 		2752B48C19B68D5600E5C692 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2752B48B19B68D5600E5C692 /* Foundation.framework */; };
 		2752B48E19B68D5600E5C692 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2752B48D19B68D5600E5C692 /* CoreGraphics.framework */; };
 		2752B49019B68D5600E5C692 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2752B48F19B68D5600E5C692 /* UIKit.framework */; };
@@ -36,10 +37,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		27006E0F19B7DB5800C54988 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		27006E1019B7DB5800C54988 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		27006E0F19B7DB5800C54988 /* CardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDeck.h; sourceTree = "<group>"; };
+		27006E1019B7DB5800C54988 /* CardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardDeck.m; sourceTree = "<group>"; };
 		27006E1219B7EE5900C54988 /* CardLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardLocation.h; sourceTree = "<group>"; };
 		27006E1319B7EE5900C54988 /* CardLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardLocation.m; sourceTree = "<group>"; };
+		27006E1519BFCC5E00C54988 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		27006E1619BFCC5E00C54988 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2752B48819B68D5600E5C692 /* ScrollViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2752B48B19B68D5600E5C692 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2752B48D19B68D5600E5C692 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -123,12 +126,14 @@
 				2752B49D19B68D5600E5C692 /* Main_iPhone.storyboard */,
 				2752B4A319B68D5600E5C692 /* CardView.h */,
 				2752B4A419B68D5600E5C692 /* CardView.m */,
-				27006E0F19B7DB5800C54988 /* MainViewController.h */,
-				27006E1019B7DB5800C54988 /* MainViewController.m */,
+				27006E0F19B7DB5800C54988 /* CardDeck.h */,
+				27006E1019B7DB5800C54988 /* CardDeck.m */,
 				27006E1219B7EE5900C54988 /* CardLocation.h */,
 				27006E1319B7EE5900C54988 /* CardLocation.m */,
 				2752B4A619B68D5600E5C692 /* Images.xcassets */,
 				2752B49219B68D5600E5C692 /* Supporting Files */,
+				27006E1519BFCC5E00C54988 /* ViewController.h */,
+				27006E1619BFCC5E00C54988 /* ViewController.m */,
 			);
 			path = ScrollViewTest;
 			sourceTree = "<group>";
@@ -259,11 +264,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27006E1719BFCC5E00C54988 /* ViewController.m in Sources */,
 				2752B4A519B68D5600E5C692 /* CardView.m in Sources */,
 				2752B49C19B68D5600E5C692 /* AppDelegate.m in Sources */,
 				27006E1419B7EE5900C54988 /* CardLocation.m in Sources */,
 				2752B49819B68D5600E5C692 /* main.m in Sources */,
-				27006E1119B7DB5800C54988 /* MainViewController.m in Sources */,
+				27006E1119B7DB5800C54988 /* CardDeck.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
