@@ -1,10 +1,3 @@
-//
-//  ViewController.m
-//  ScrollViewTest
-//
-//  Created by Michael MacDougall on 9/9/14.
-//  Copyright (c) 2014 Michael MacDougall. All rights reserved.
-//
 
 #import "ViewController.h"
 #import "CardDeck.h"

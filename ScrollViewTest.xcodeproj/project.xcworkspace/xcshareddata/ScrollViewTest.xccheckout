@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>4269A9BE-313D-43A4-8DCC-2561F45F19E3</string>
+	<string>3198853C-2A92-4A48-A260-8FDF760DE22D</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ScrollViewTest</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>C92323D3-49E9-420F-BF79-54F440527D17</key>
-		<string>https://github.com/macdoum1/ScrollViewTest.git</string>
+		<key>F5362FE5-77FD-48F0-ACC0-9EA39E99CFD2</key>
+		<string>https://github.com/ericschlanger/ScrollViewTest.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ScrollViewTest.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>C92323D3-49E9-420F-BF79-54F440527D17</key>
+		<key>F5362FE5-77FD-48F0-ACC0-9EA39E99CFD2</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/macdoum1/ScrollViewTest.git</string>
+	<string>https://github.com/ericschlanger/ScrollViewTest.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>C92323D3-49E9-420F-BF79-54F440527D17</string>
+	<string>F5362FE5-77FD-48F0-ACC0-9EA39E99CFD2</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>C92323D3-49E9-420F-BF79-54F440527D17</string>
+			<string>F5362FE5-77FD-48F0-ACC0-9EA39E99CFD2</string>
 			<key>IDESourceControlWCCName</key>
-			<string>ScrollViewTest</string>
+			<string>picsell-Card Dashboard</string>
 		</dict>
 	</array>
 </dict>

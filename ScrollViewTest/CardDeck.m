@@ -1,10 +1,3 @@
-//
-//  CardDeck.m
-//  ScrollViewTest
-//
-//  Created by Michael MacDougall on 9/3/14.
-//  Copyright (c) 2014 Michael MacDougall. All rights reserved.
-//
 
 #import "CardDeck.h"
 
@@ -33,7 +26,7 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
     self = [super initWithFrame:frame];
     if(self) {
         self.cardContainer = [[UIView alloc] initWithFrame:self.bounds];
-        self.cardContainer.backgroundColor = [UIColor blueColor];
+        self.cardContainer.backgroundColor = [UIColor orangeColor];
         [self addSubview:self.cardContainer];
         [self setupCardsWithNumOfCards:numOfCards];
     }
@@ -41,6 +34,7 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 }
 
 - (void)setupCardsWithNumOfCards:(NSInteger)numOfCards {
+    
     self.cardArray = [[NSMutableArray alloc]init];
     
     CGRect cardFrame = CGRectMake(0, 0, 320, 438.5);
@@ -158,7 +152,14 @@ typedef NS_ENUM(NSUInteger, CardDeckAnimateDirection) {
 }
 
 - (void)cardView:(CardView *)cardView moveWithOffset:(CGFloat)offset withDirection:(ScrollDirection)direction {
-    [self.cardContainer bringSubviewToFront:cardView];
+    
+    if (direction == ScrollDirectionDown) {
+        [self.cardContainer bringSubviewToFront:cardView];
+    }
+    if (direction == ScrollDirectionUp && self.currentCardIdx + 1 < self.cardArray.count) {
+        [self.cardContainer bringSubviewToFront:self.cardArray[self.currentCardIdx+1]];
+    }
+    
     cardView.center = CGPointMake(cardView.center.x, offset + [CardLocation locationForIndex:2].center.y);
     CGFloat ratio = offset/kThreshold;
     if(ratio > 1) {

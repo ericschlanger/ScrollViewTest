@@ -1,15 +1,10 @@
-//
-//  CardDeck.h
-//  ScrollViewTest
-//
-//  Created by Michael MacDougall on 9/3/14.
-//  Copyright (c) 2014 Michael MacDougall. All rights reserved.
-//
+
 
 #import <UIKit/UIKit.h>
 #import "CardView.h"
 
 @class CardDeck;
+
 @protocol CardDeckDelegate
 
 - (NSInteger)cardDeck:(CardDeck *)cardDeck numberOfRowsInSection:(NSInteger)section forCard:(CardView *)card;
@@ -23,4 +18,5 @@
 - (id)initWithFrame:(CGRect)frame andNumberOfCards:(NSInteger)numOfCards;
 
 @property (nonatomic,weak) id<CardDeckDelegate> delegate;
+
 @end

@@ -1,10 +1,3 @@
-//
-//  CardLocation.m
-//  ScrollViewTest
-//
-//  Created by Michael MacDougall on 9/3/14.
-//  Copyright (c) 2014 Michael MacDougall. All rights reserved.
-//
 
 #import "CardLocation.h"
 
@@ -32,6 +25,10 @@
  const CGFloat alpha5 = .3f;
  const CGFloat transform5 = 29/32.0;
 
+const CGFloat centerInvisible = 400;
+const CGFloat alphaInvisible = 0;
+const CGFloat transformInvisible = 29/32.0;
+
 
 @implementation CardLocation
 
@@ -46,6 +43,12 @@
 
 + (instancetype)locationForIndex:(NSInteger)index {
 
+    if (index < 0) {
+        return [CardLocation locationWithCenter:CGPointMake(160, center0) alpha:0 transform:CGAffineTransformMakeScale(transform0, transform0) index:0];
+    }
+    if (index > 5) {
+        return [CardLocation locationWithCenter:CGPointMake(160, center5) alpha:0 transform:CGAffineTransformMakeScale(transform5, transform5) index:5];
+    }
     switch (index) {
         case 0:
             return [CardLocation locationWithCenter:CGPointMake(160, center0) alpha:alpha0 transform:CGAffineTransformMakeScale(transform0, transform0) index:0];
@@ -59,20 +62,26 @@
             return [CardLocation locationWithCenter:CGPointMake(160, center4) alpha:alpha4 transform:CGAffineTransformMakeScale(transform4, transform4) index:4];
         case 5:
             return [CardLocation locationWithCenter:CGPointMake(160, center5) alpha:alpha5 transform:CGAffineTransformMakeScale(transform5, transform5) index:5];
+   
     }
     return nil;
 }
 
 + (instancetype)locationForStart:(NSInteger)startIdx end:(NSInteger)endIdx distancePercentage:(CGFloat)distancePercent {
     
+    //Derived and proved the midpoint formula from scratch. Suck it Pythagoras.
+    
     CardLocation *start = [CardLocation locationForIndex:startIdx];
     CardLocation *end = [CardLocation locationForIndex:endIdx];
     CardLocation *location = [[CardLocation alloc]init];
+    
     location.center = CGPointMake(160, start.center.y + (end.center.y - start.center.y)*distancePercent);
     location.alpha = start.alpha + (end.alpha - start.alpha)*distancePercent;
+    
     CGFloat newTrans = start.transform.a + (end.transform.a - start.transform.a)*distancePercent;
     location.transform = CGAffineTransformMakeScale(newTrans, newTrans);
     location.locationIndex = start.locationIndex;
+    
     return location;
 }
 

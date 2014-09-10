@@ -46,13 +46,8 @@ static const CGFloat kBottomThreshold = 438.5;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    ScrollDirection scrollDirection = ScrollDirectionNone;
-    if (self.lastContentOffset > scrollView.contentOffset.y) {
-        scrollDirection = ScrollDirectionUp;
-    } else if (self.lastContentOffset < scrollView.contentOffset.y) {
-        scrollDirection = ScrollDirectionDown;
-    }
-    
+   
+    ScrollDirection scrollDirection = [self getScrollDirectionFromScrollView:scrollView];
     self.lastContentOffset = scrollView.contentOffset.y;
 
     if(scrollView.isDragging) {
@@ -94,6 +89,18 @@ static const CGFloat kBottomThreshold = 438.5;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self.delegate cardView:self cellForIndexAtPath:indexPath];
+}
+
+#pragma mark - Helper Methods
+
+- (ScrollDirection)getScrollDirectionFromScrollView:(UIScrollView *)scrollView{
+    ScrollDirection scrollDirection = ScrollDirectionNone;
+    if (self.lastContentOffset > scrollView.contentOffset.y) {
+        scrollDirection = ScrollDirectionUp;
+    } else if (self.lastContentOffset < scrollView.contentOffset.y) {
+        scrollDirection = ScrollDirectionDown;
+    }
+    return scrollDirection;
 }
 
 @end
