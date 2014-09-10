@@ -22,6 +22,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // I would recommend creating an array indexed with the number of cards
+    // And at each index contains an array of cells/data for the given card
+    // Made a simple super 1d example for testing
     self.cardArray = [[NSMutableArray alloc] initWithObjects:@"Test0",@"Test1",@"Test2",@"Test3",@"Test4",@"Test5", nil];
     
     self.cardDeck = [[CardDeck alloc] initWithFrame:self.view.bounds andNumberOfCards:self.cardArray.count];
